@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nudge Display | Home</title>
+
+     <!-- Include Bootstrap CSS via CDN -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        crossorigin="anonymous"
+    >
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container2 {
+            display: flex;
+            min-height: 100%;
+        }
+
+        header {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .text-input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .text-input-group input {
+            flex: 1;
+        }
+
+        .submit-button {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- Header: Green bar with logo and navigation links -->
+<header style="margin-top:10px;">
+    <div class="logo">
+        <!--<a href="#">
+            <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo">
+        </a>-->
+    </div>
+    <nav>
+        <ul style="list-style: none; display: flex; gap: 20px;">
+            <li><a href="{% url 'home' %}" style="color: black; text-decoration: none;">Home</a></li>
+            <li><a href="#" style="color: black; text-decoration: none;">About Us</a></li>
+            <li><a href="#" style="color: black; text-decoration: none;">What is Personalization</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" style="color: black; text-decoration: none;">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<div class="container2">
+    <!-- Left Section: Distinct background color with text -->
+    <div class="left-section" style="flex: 1; background-color: white; display: flex; align-items: center; justify-content: center;">
+        <div style="display:flex; flex-direction:column; align-items:center;">
+            <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo" style="width:200px;margin-bottom:50px;">
+            <h1 style="color: black; text-align: center; font-size: 35px;">Experience Personalization with Nudge</h1>
+        </div>
+    </div>
+
+    <!-- Right Section: Login and Sign up -->
+    <div class="right-section" style="background-color: #FDD168;">
+        <h2 style="color:gray;">Refine your selection to experience Nudge</h2>
+        <form action="{% url 'home' %}" method="POST" style="margin-top:25px;">
+            {% csrf_token %}
+
+            <!-- Text Input Boxes in a 2x2 Matrix Layout -->
+            <div class="text-input-group">
+                <input type="text" name="gender" placeholder="Gender" class="text-input">
+                <input type="number" name="min_age" placeholder="Min Age" class="text-input" min=1>
+                <input type="number" name="max_age" placeholder="Max Age" class="text-input" min=2>
+            </div>
+            <div class="text-input-group">
+                <input type="text" name="nationality" placeholder="Nationality" class="text-input">
+                <input type="text" name="course" placeholder="Course" class="text-input">
+            </div>
+            <input type="text" name="location" placeholder="Branch Location" class="text-input">
+
+            <!-- Submit Button -->
+            <div class="submit-button">
+                <button type="submit" class="btn btn-success">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

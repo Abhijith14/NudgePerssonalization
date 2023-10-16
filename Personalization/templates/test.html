@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nudge Display</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 8;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- Header: Green bar with logo and navigation links -->
+<header style="background-color: green; display: flex; justify-content: space-between; align-items: center; padding: 10px 30px;">
+    <div class="logo">
+        <a href="#">
+            <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo" style="height: 40px;">
+        </a>
+    </div>
+    <nav>
+        <ul style="list-style: none; display: flex; gap: 20px;">
+            <li><a href="#" style="color: white; text-decoration: none;">About Us</a></li>
+            <li><a href="#" style="color: white; text-decoration: none;">What is Personalization</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="container">
+        <!-- Left Section: Distinct background color with text -->
+        <div class="left-section" style="flex: 1; background-color: #d0e6f1; display: flex; align-items: center; justify-content: center;">
+            <h1 style="color: #333; text-align: center; max-width: 80%;">Experience Personalization with Nudge</h1>
+        </div>
+
+        <!-- Right Section: Login and Sign up -->
+        <div class="right-section" style="flex: 1; padding: 50px; display: flex; flex-direction: column; justify-content: center;">
+            <h2>Login</h2>
+            <form action="#" method="post">
+                {% csrf_token %}
+                <div>
+                    <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                </div>
+                <div>
+                    <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                </div>
+                <div>
+                    <button type="submit" style="padding: 10px 20px;">Login</button>
+                </div>
+            </form>
+            <p style="margin-top: 20px;">Don't have an account? <a href="#">Sign Up</a></p>
+        </div>
+    </div>
+</body>
+</html>

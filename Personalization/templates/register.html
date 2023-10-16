@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nudge Display | Register</title>
+    <!-- Include Bootstrap CSS via CDN -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        crossorigin="anonymous"
+    >
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container2 {
+            display: flex;
+            min-height: 100%;
+        }
+
+        header {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 30px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .text-input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+
+        .text-input-group input {
+            flex: 1;
+        }
+
+        .submit-button {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!-- Header: Green bar with logo and navigation links -->
+<header style="margin-top:10px;">
+    <div class="logo">
+        <!--<a href="#">
+            <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo">
+        </a>-->
+    </div>
+    <nav>
+        <ul style="list-style: none; display: flex; gap: 20px;">
+            <li><a href="#" style="color: black; text-decoration: none;">About Us</a></li>
+            <li><a href="#" style="color: black; text-decoration: none;">What is Personalization</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <div class="container2">
+        <!-- Left Section: Distinct background color with text -->
+        <div class="left-section" style="flex: 1; background-color: white; display: flex; align-items: center; justify-content: center;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+                <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo" style="width:200px;margin-bottom:50px;">
+                <h1 style="color: black; text-align: center; font-size: 35px;">Experience Personalization with Nudge</h1>
+            </div>
+        </div>
+
+        <!-- Right Section: Login and Sign up -->
+        <div class="right-section" style="background-color: #FDD168;">
+            <h2>Register</h2>
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="companyname" placeholder="Company Name" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="email" name="emailaddress" placeholder="Email" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <!-- <input type="address" name="address" placeholder="Main Address" required style="width: 100%; padding: 10px; margin-bottom: 10px;"> -->
+                <input type="text" name="phone" placeholder="Phone Number" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <!-- <input type="date" name="register" placeholder="Email" required style="width: 100%; padding: 10px; margin-bottom: 10px;"> -->
+                <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <button type="submit" style="padding: 10px 20px;">Register</button>
+            </form>
+            <p style="margin-top: 20px;">Have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </div>
+</body>
+</html>

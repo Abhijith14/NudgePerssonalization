@@ -1,0 +1,6 @@
+Customer_ID,Company_Name,Main_Address,Primary_Contact,Primary_Phone,Customer_Type,Registration_Date,Services_Detail
+1,Unite Students,"256 King Street, Aberdeen, AB24 5BU",Joe Bloggs,3003038642,Real Estate,08-10-2023,abcdef
+2,University of Aberdeen,"Kings College, Aberdeen, AB24 3FX",John Smith,1224272000,University,08-10-2023,abcdef
+3,University of Edinburgh,"18 Holyrood Park Road, Edinburgh, EH16 5AY",James Brown,441316501000,University,08-10-2023,abcdef
+4,University of Glasgow,"University Avenue, Glasgow, G12 8QQ",Aaron Powell,1413302000,University,08-10-2023,abcdef
+5,University of St Andrews,"College Gate, St Andrews, KY16 9AJ",Jonathan Cook,1334476161,University,08-10-2023,abcdef

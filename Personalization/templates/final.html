@@ -1,0 +1,63 @@
+<!-- create a simple html that displays 4 rows and 4 columns in a table --->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title>
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Branch_Name</th>
+                <th>Branch Location</th>
+                <th>Specific Location</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Nationality</th>
+                <th>Course</th>
+                <th>Accommodation</th>
+                <th>{{ final_mode }}</th>
+                <th>{{ final_mode }} Parameters</th>
+                <th>Display_MAC</th>
+                <th>EPD_No</th>
+                <th>Activation_Date</th>
+                <th>Initial_IP</th>
+                <th>Current_IP</th>
+                <th>Is_Active</th>
+                <th>Display_Size</th>
+                <th>EPDs_Nos</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in final_data %}
+            <tr>
+                 <td>{{ data.company }}</td>
+                    <td>{{ data.branch_name }}</td>
+                    <td>{{ data.branch_loc }}</td>
+                    <td>{{ data.specific_loc }}</td>
+                    <td>{{ data.age }}</td>
+                    <td>{{ data.gender }}</td>
+                    <td>{{ data.nationality}}</td>
+                    <td>{{ data.course }}</td>
+                    <td>{{ data.acc }}</td>
+                    <td>{{ data.data_cont }}</td>
+                    <td>{{ data.data_param }}</td>
+                    <td>{{ data.display_mac }}</td>
+                    <td>{{ data.epd_no }}</td>
+                    <td>{{ data.Activation_date }}</td>
+                    <td>{{ data.Initial_IP }}</td>
+                    <td>{{ data.Current_IP }}</td>
+                    <td>{{ data.Is_Active }}</td>
+                    <td>{{ data.Display_Size }}</td>
+                    <td>{{ data.EPDs_Nos }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="17" style="text-align: center;">No data available</td>
+            </tr>
+        {% endfor %}
+        </tbody
+    </table>
+</body>
+</html>

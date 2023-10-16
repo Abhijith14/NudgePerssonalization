@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nudge Display | Home</title>
+
+   <!-- Include Bootstrap CSS via CDN -->
+    <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        crossorigin="anonymous"
+    >
+
+    <style>
+        .table-container {
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            margin-top: 50px;
+            flex-direction: column;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 50px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .input-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+
+        .input-container input {
+            margin-right: 10px;
+            padding: 5px;
+        }
+
+        .button-container {
+            display: flex;
+        }
+
+        .button-container button {
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        /* CSS to change cursor and row color on hover */
+        .clickable-row:hover {
+            cursor: pointer;
+            background-color: #f5f5f5; /* Slight white color on hover */
+        }
+    </style>
+</head>
+<body style="overflow: hidden;">
+<!-- Header: Green bar with logo and navigation links -->
+<header style="background-color: #FDD168; display: flex; justify-content: space-between; align-items: center; padding: 10px 30px 10px;">
+    <div class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Nudge Display Logo" style="height: 40px;">
+        </a>
+    </div>
+    <nav  style="margin-top:10px;">
+        <ul style="list-style: none; display: flex; gap: 20px;">
+            <li><a href="{% url 'home' %}" style="color: black; text-decoration: none;">Home</a></li>
+            <li><a href="#" style="color: black; text-decoration: none;">About Us</a></li>
+            <li><a href="#" style="color: black; text-decoration: none;">What is Personalization</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" style="color: black; text-decoration: none;">Logout</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+<div class="table-container">
+    <div class="input-container">
+        <form action="{% url 'image' %}" method="GET">
+            {% csrf_token %}
+            <input type="text" name="gender" placeholder="Gender">
+            <input type="number" name="min_age" placeholder="Min Age" min=1>
+            <input type="number" name="max_age" placeholder="Max Age" min=2>
+            <input type="text" name="nationality" placeholder="Nationality">
+            <input type="text" name="course" placeholder="Course">
+            <input type="text" name="location" placeholder="Branch Location">
+            <input type="submit" value="Filter" class="btn btn-success7">
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Sl No</th>
+                <th>Image URL</th>
+                <th>Image Parameters</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for image_detail in image_details %}
+                  <tr class="clickable-row" data-href="#" data-radio-id="{{ image_detail.Image_ID }}">
+                    <td>{{ forloop.counter }}</td> 
+                    <td>{{ image_detail.FTP_Address.URL }}</td>
+                    <td>{{ image_detail.Image_Parameters }}</td>
+                    <td><input type="radio" name="selected_image" value="{{ image_detail.Image_ID }}"></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center;">No data available</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     <!-- Buttons -->
+    <div class="button-container"> <!--  style="margin-left: auto;" -->
+            <button id="subBtn" style="margin-right: 10px;">Ready to sent</button>
+    </div>
+
+</div>
+
+
+<!-- Custom scripts -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // JavaScript to make the table rows clickable and update the radio buttons
+    document.addEventListener("DOMContentLoaded", function() {
+        var rows = document.querySelectorAll(".clickable-row");
+        rows.forEach(function(row) {
+            row.addEventListener("click", function() {
+                // Get the data-radio-id attribute from the clicked row
+                var radioId = this.getAttribute("data-radio-id");
+                if (radioId) {
+                    // Find the corresponding radio button and select it
+                    var radio = document.querySelector("input[type=radio][value='" + radioId + "']");
+                    if (radio) {
+                        radio.checked = true;
+                    }
+                }
+                
+                // var url = this.getAttribute("data-href");
+                // if (url) {
+                //     window.location.href = url;
+                // }
+            });
+        });
+    // Handle the "Ready to send" button click
+        $("#subBtn").click(function() {
+
+            // Find the selected radio button
+            var selectedRadio = $("input[name='selected_image']:checked");
+            if (selectedRadio.length === 0) {
+                alert("Please select an image.");
+                return;
+            }
+            
+            // Create a hidden form
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "{% url 'final' %}";
+            
+            // Create an input field for the selected message ID
+            var input1 = document.createElement("input");
+            input1.type = "hidden";
+            input1.name = "selected_data";
+            input1.value = selectedRadio.val();
+
+            // Create an input field for the get requests
+            var input2 = document.createElement("input");
+            input2.type = "hidden";
+            input2.name = "getContents";
+            input2.value = "{{ getContents }}";
+
+            var input3 = document.createElement("input");
+            input3.type = "hidden";
+            input3.name = "mode";
+            input3.value = "image";
+
+
+            // Create an input field for the CSRF token
+            var csrfToken = document.createElement("input");
+            csrfToken.type = "hidden";
+            csrfToken.name = "csrfmiddlewaretoken";
+            csrfToken.value = "{{ csrf_token }}";
+            
+            // Append the input fields to the form
+            form.appendChild(input1);
+            form.appendChild(input2);
+            form.appendChild(input3);
+            form.appendChild(csrfToken);
+            
+            // Append the form to the document body
+            document.body.appendChild(form);
+            
+            // Submit the form
+            form.submit();
+        });
+    });
+</script>
+
+</body>
+</html>
